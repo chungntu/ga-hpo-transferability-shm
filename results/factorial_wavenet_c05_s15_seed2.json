@@ -1,0 +1,891 @@
+{
+  "strategy": "grid",
+  "model": "wavenet",
+  "dataset": "z24_c05_s15",
+  "seed": 2,
+  "epochs": 40,
+  "window": 2048,
+  "scaler": "per_window",
+  "n_classes": 5,
+  "n_channels": 15,
+  "factorial_label": "c05_s15",
+  "unique_evaluations": 72,
+  "wall_time_sec": 6287.100988599937,
+  "split_digest": "cc80c3d9e6a8",
+  "best_config": {
+    "lr": 0.0003,
+    "filters": 16,
+    "res_per_block": 10,
+    "n_blocks": 1
+  },
+  "best_val_acc": 0.4633333333333333,
+  "best_test_acc": 0.2972222222222222,
+  "best_test_macro_f1": 0.2795023113105352,
+  "trace": [
+    {
+      "index": 1,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.23833333333333334,
+      "test_acc": 0.22592592592592592,
+      "test_macro_f1": 0.2225746943446958
+    },
+    {
+      "index": 2,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.31333333333333335,
+      "test_acc": 0.21388888888888888,
+      "test_macro_f1": 0.21208054760663125
+    },
+    {
+      "index": 3,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.16666666666666666,
+      "test_acc": 0.21574074074074073,
+      "test_macro_f1": 0.2087899168815436
+    },
+    {
+      "index": 4,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.31833333333333336,
+      "test_acc": 0.21666666666666667,
+      "test_macro_f1": 0.2136233829083082
+    },
+    {
+      "index": 5,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.24833333333333332,
+      "test_acc": 0.1824074074074074,
+      "test_macro_f1": 0.18126358807540002
+    },
+    {
+      "index": 6,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.25166666666666665,
+      "test_acc": 0.21574074074074073,
+      "test_macro_f1": 0.2115838978657456
+    },
+    {
+      "index": 7,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.2783333333333333,
+      "test_acc": 0.22685185185185186,
+      "test_macro_f1": 0.22217849150599345
+    },
+    {
+      "index": 8,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.2733333333333333,
+      "test_acc": 0.19166666666666668,
+      "test_macro_f1": 0.1868501039417299
+    },
+    {
+      "index": 9,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.3,
+      "test_acc": 0.1574074074074074,
+      "test_macro_f1": 0.15116137693857873
+    },
+    {
+      "index": 10,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.25166666666666665,
+      "test_acc": 0.22870370370370371,
+      "test_macro_f1": 0.22653091748159354
+    },
+    {
+      "index": 11,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.4033333333333333,
+      "test_acc": 0.2777777777777778,
+      "test_macro_f1": 0.2651254918231428
+    },
+    {
+      "index": 12,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.25333333333333335,
+      "test_acc": 0.23425925925925925,
+      "test_macro_f1": 0.2273318474401682
+    },
+    {
+      "index": 13,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.28833333333333333,
+      "test_acc": 0.2111111111111111,
+      "test_macro_f1": 0.20604273027938347
+    },
+    {
+      "index": 14,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.2916666666666667,
+      "test_acc": 0.2351851851851852,
+      "test_macro_f1": 0.22739886621102595
+    },
+    {
+      "index": 15,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.315,
+      "test_acc": 0.2,
+      "test_macro_f1": 0.19252233513534017
+    },
+    {
+      "index": 16,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.3566666666666667,
+      "test_acc": 0.20462962962962963,
+      "test_macro_f1": 0.1959244069202001
+    },
+    {
+      "index": 17,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.3983333333333333,
+      "test_acc": 0.24537037037037038,
+      "test_macro_f1": 0.2348606227981808
+    },
+    {
+      "index": 18,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.255,
+      "test_acc": 0.19074074074074074,
+      "test_macro_f1": 0.18102187136100464
+    },
+    {
+      "index": 19,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.26166666666666666,
+      "test_acc": 0.2111111111111111,
+      "test_macro_f1": 0.20795442130993919
+    },
+    {
+      "index": 20,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.265,
+      "test_acc": 0.2361111111111111,
+      "test_macro_f1": 0.2308684919330936
+    },
+    {
+      "index": 21,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.24666666666666667,
+      "test_acc": 0.25555555555555554,
+      "test_macro_f1": 0.249749392031441
+    },
+    {
+      "index": 22,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.3016666666666667,
+      "test_acc": 0.2212962962962963,
+      "test_macro_f1": 0.21594164638249125
+    },
+    {
+      "index": 23,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.22666666666666666,
+      "test_acc": 0.1962962962962963,
+      "test_macro_f1": 0.19636286635016667
+    },
+    {
+      "index": 24,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.25,
+      "test_acc": 0.2101851851851852,
+      "test_macro_f1": 0.20648567776483961
+    },
+    {
+      "index": 25,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.265,
+      "test_acc": 0.23796296296296296,
+      "test_macro_f1": 0.2272655224183729
+    },
+    {
+      "index": 26,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.29333333333333333,
+      "test_acc": 0.19907407407407407,
+      "test_macro_f1": 0.1960968800536363
+    },
+    {
+      "index": 27,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.295,
+      "test_acc": 0.1675925925925926,
+      "test_macro_f1": 0.15954230446801493
+    },
+    {
+      "index": 28,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.25833333333333336,
+      "test_acc": 0.2462962962962963,
+      "test_macro_f1": 0.24395765135165304
+    },
+    {
+      "index": 29,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.395,
+      "test_acc": 0.2935185185185185,
+      "test_macro_f1": 0.27766423598663775
+    },
+    {
+      "index": 30,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.24833333333333332,
+      "test_acc": 0.24814814814814815,
+      "test_macro_f1": 0.24195270469041263
+    },
+    {
+      "index": 31,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.29833333333333334,
+      "test_acc": 0.21296296296296297,
+      "test_macro_f1": 0.20692815475954376
+    },
+    {
+      "index": 32,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.2816666666666667,
+      "test_acc": 0.23796296296296296,
+      "test_macro_f1": 0.23076749553090287
+    },
+    {
+      "index": 33,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.315,
+      "test_acc": 0.21388888888888888,
+      "test_macro_f1": 0.20534309657906874
+    },
+    {
+      "index": 34,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.37166666666666665,
+      "test_acc": 0.20462962962962963,
+      "test_macro_f1": 0.19468414234127324
+    },
+    {
+      "index": 35,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.42,
+      "test_acc": 0.2611111111111111,
+      "test_macro_f1": 0.24947048791538223
+    },
+    {
+      "index": 36,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.26666666666666666,
+      "test_acc": 0.1824074074074074,
+      "test_macro_f1": 0.17327397388683297
+    },
+    {
+      "index": 37,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.255,
+      "test_acc": 0.23148148148148148,
+      "test_macro_f1": 0.22701498249278157
+    },
+    {
+      "index": 38,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.25833333333333336,
+      "test_acc": 0.2388888888888889,
+      "test_macro_f1": 0.23578115842327393
+    },
+    {
+      "index": 39,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.24,
+      "test_acc": 0.25555555555555554,
+      "test_macro_f1": 0.2510471661007184
+    },
+    {
+      "index": 40,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.29333333333333333,
+      "test_acc": 0.21851851851851853,
+      "test_macro_f1": 0.2120382493454957
+    },
+    {
+      "index": 41,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.245,
+      "test_acc": 0.17962962962962964,
+      "test_macro_f1": 0.1778362202614415
+    },
+    {
+      "index": 42,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.23666666666666666,
+      "test_acc": 0.21574074074074073,
+      "test_macro_f1": 0.210865698441668
+    },
+    {
+      "index": 43,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.2633333333333333,
+      "test_acc": 0.22870370370370371,
+      "test_macro_f1": 0.2204648710462664
+    },
+    {
+      "index": 44,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.3,
+      "test_acc": 0.19537037037037036,
+      "test_macro_f1": 0.189652594367044
+    },
+    {
+      "index": 45,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.31,
+      "test_acc": 0.15092592592592594,
+      "test_macro_f1": 0.14445870670803918
+    },
+    {
+      "index": 46,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.30833333333333335,
+      "test_acc": 0.26666666666666666,
+      "test_macro_f1": 0.25878219964655963
+    },
+    {
+      "index": 47,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.43,
+      "test_acc": 0.29444444444444445,
+      "test_macro_f1": 0.27695131693795416
+    },
+    {
+      "index": 48,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.2633333333333333,
+      "test_acc": 0.27037037037037037,
+      "test_macro_f1": 0.2550748275870347
+    },
+    {
+      "index": 49,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.31666666666666665,
+      "test_acc": 0.19444444444444445,
+      "test_macro_f1": 0.18940912533047172
+    },
+    {
+      "index": 50,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.2833333333333333,
+      "test_acc": 0.2212962962962963,
+      "test_macro_f1": 0.21338062427156523
+    },
+    {
+      "index": 51,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.3566666666666667,
+      "test_acc": 0.2064814814814815,
+      "test_macro_f1": 0.19857825239418175
+    },
+    {
+      "index": 52,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.38333333333333336,
+      "test_acc": 0.19814814814814816,
+      "test_macro_f1": 0.18766396393063509
+    },
+    {
+      "index": 53,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.4633333333333333,
+      "test_acc": 0.2972222222222222,
+      "test_macro_f1": 0.2795023113105352
+    },
+    {
+      "index": 54,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.29833333333333334,
+      "test_acc": 0.17962962962962964,
+      "test_macro_f1": 0.16813349633275465
+    },
+    {
+      "index": 55,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.24333333333333335,
+      "test_acc": 0.23425925925925925,
+      "test_macro_f1": 0.22884910667089314
+    },
+    {
+      "index": 56,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.29,
+      "test_acc": 0.24259259259259258,
+      "test_macro_f1": 0.2366877048482081
+    },
+    {
+      "index": 57,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.28,
+      "test_acc": 0.2361111111111111,
+      "test_macro_f1": 0.23548112414690112
+    },
+    {
+      "index": 58,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.2816666666666667,
+      "test_acc": 0.175,
+      "test_macro_f1": 0.16708070607754344
+    },
+    {
+      "index": 59,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.24833333333333332,
+      "test_acc": 0.17592592592592593,
+      "test_macro_f1": 0.17091579162539117
+    },
+    {
+      "index": 60,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.22833333333333333,
+      "test_acc": 0.22777777777777777,
+      "test_macro_f1": 0.21864485916604007
+    },
+    {
+      "index": 61,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.305,
+      "test_acc": 0.2222222222222222,
+      "test_macro_f1": 0.21725375465634184
+    },
+    {
+      "index": 62,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.3283333333333333,
+      "test_acc": 0.21203703703703702,
+      "test_macro_f1": 0.20627243291579123
+    },
+    {
+      "index": 63,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.3433333333333333,
+      "test_acc": 0.16296296296296298,
+      "test_macro_f1": 0.1540689455233299
+    },
+    {
+      "index": 64,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.31833333333333336,
+      "test_acc": 0.32685185185185184,
+      "test_macro_f1": 0.31429123916604335
+    },
+    {
+      "index": 65,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.41333333333333333,
+      "test_acc": 0.30092592592592593,
+      "test_macro_f1": 0.28407060298049125
+    },
+    {
+      "index": 66,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.30666666666666664,
+      "test_acc": 0.2796296296296296,
+      "test_macro_f1": 0.2581755450807933
+    },
+    {
+      "index": 67,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.31333333333333335,
+      "test_acc": 0.1685185185185185,
+      "test_macro_f1": 0.16138150564050813
+    },
+    {
+      "index": 68,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.31666666666666665,
+      "test_acc": 0.19814814814814816,
+      "test_macro_f1": 0.19275840739537606
+    },
+    {
+      "index": 69,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.39666666666666667,
+      "test_acc": 0.19722222222222222,
+      "test_macro_f1": 0.18554644823256777
+    },
+    {
+      "index": 70,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.445,
+      "test_acc": 0.26666666666666666,
+      "test_macro_f1": 0.2500415021642954
+    },
+    {
+      "index": 71,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.4266666666666667,
+      "test_acc": 0.2462962962962963,
+      "test_macro_f1": 0.2316547861790806
+    },
+    {
+      "index": 72,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.33166666666666667,
+      "test_acc": 0.2064814814814815,
+      "test_macro_f1": 0.18691500041035333
+    }
+  ],
+  "ga_history": null
+}

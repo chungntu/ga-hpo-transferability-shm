@@ -1,0 +1,192 @@
+{
+  "strategy": "random",
+  "model": "cnn1d",
+  "dataset": "qugs_small",
+  "seed": 1,
+  "epochs": 40,
+  "window": 2048,
+  "scaler": "per_window",
+  "unique_evaluations": 14,
+  "wall_time_sec": 222.94204210001044,
+  "split_digest": "1b7f6c47d389",
+  "best_config": {
+    "lr": 0.0001,
+    "filters": 32,
+    "n_blocks": 4,
+    "kernel_size": 9
+  },
+  "best_val_acc": 0.95,
+  "best_test_acc": 0.9378125,
+  "best_test_macro_f1": 0.937546927481473,
+  "trace": [
+    {
+      "index": 1,
+      "config": {
+        "lr": 0.0001,
+        "filters": 32,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.8125,
+      "test_acc": 0.82,
+      "test_macro_f1": 0.7883968767816847
+    },
+    {
+      "index": 2,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.84375,
+      "test_acc": 0.839375,
+      "test_macro_f1": 0.8370269834645999
+    },
+    {
+      "index": 3,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.79875,
+      "test_acc": 0.7953125,
+      "test_macro_f1": 0.7585397364880959
+    },
+    {
+      "index": 4,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "n_blocks": 4,
+        "kernel_size": 5
+      },
+      "fitness": 0.675,
+      "test_acc": 0.6753125,
+      "test_macro_f1": 0.6662706711126332
+    },
+    {
+      "index": 5,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "n_blocks": 5,
+        "kernel_size": 5
+      },
+      "fitness": 0.785,
+      "test_acc": 0.77125,
+      "test_macro_f1": 0.7706879437220684
+    },
+    {
+      "index": 6,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "n_blocks": 3,
+        "kernel_size": 5
+      },
+      "fitness": 0.59125,
+      "test_acc": 0.6003125,
+      "test_macro_f1": 0.5771532810324639
+    },
+    {
+      "index": 7,
+      "config": {
+        "lr": 3e-05,
+        "filters": 32,
+        "n_blocks": 5,
+        "kernel_size": 5
+      },
+      "fitness": 0.75125,
+      "test_acc": 0.7565625,
+      "test_macro_f1": 0.7525066092790708
+    },
+    {
+      "index": 8,
+      "config": {
+        "lr": 0.001,
+        "filters": 32,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.72125,
+      "test_acc": 0.7046875,
+      "test_macro_f1": 0.6931425869605943
+    },
+    {
+      "index": 9,
+      "config": {
+        "lr": 3e-05,
+        "filters": 32,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.8425,
+      "test_acc": 0.8428125,
+      "test_macro_f1": 0.8387204950421026
+    },
+    {
+      "index": 10,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "n_blocks": 4,
+        "kernel_size": 5
+      },
+      "fitness": 0.76125,
+      "test_acc": 0.7521875,
+      "test_macro_f1": 0.7510875443800542
+    },
+    {
+      "index": 11,
+      "config": {
+        "lr": 0.0001,
+        "filters": 32,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.86,
+      "test_acc": 0.85,
+      "test_macro_f1": 0.8450727655450722
+    },
+    {
+      "index": 12,
+      "config": {
+        "lr": 3e-05,
+        "filters": 32,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.92125,
+      "test_acc": 0.905,
+      "test_macro_f1": 0.9059124965791211
+    },
+    {
+      "index": 13,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.90375,
+      "test_acc": 0.8984375,
+      "test_macro_f1": 0.8956950107372682
+    },
+    {
+      "index": 14,
+      "config": {
+        "lr": 0.0001,
+        "filters": 32,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.95,
+      "test_acc": 0.9378125,
+      "test_macro_f1": 0.937546927481473
+    }
+  ],
+  "ga_history": null
+}

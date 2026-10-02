@@ -1,0 +1,6 @@
+# Versions used for every result in results/ (Python 3.12.10, Windows 10, CUDA 12.4)
+torch==2.6.0
+numpy==2.4.6
+scipy==1.16.1
+scikit-learn==1.7.1
+matplotlib==3.10.5

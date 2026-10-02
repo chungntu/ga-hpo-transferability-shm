@@ -1,0 +1,193 @@
+{
+  "strategy": "random",
+  "model": "wavenet",
+  "dataset": "qugs_small",
+  "seed": 1,
+  "epochs": 40,
+  "window": 2048,
+  "scaler": "per_window",
+  "fraction": "half",
+  "unique_evaluations": 14,
+  "wall_time_sec": 926.4177685999312,
+  "split_digest": "1b7f6c47d389",
+  "best_config": {
+    "lr": 0.0003,
+    "filters": 8,
+    "res_per_block": 10,
+    "n_blocks": 2
+  },
+  "best_val_acc": 0.68125,
+  "best_test_acc": 0.671875,
+  "best_test_macro_f1": 0.6687900591206579,
+  "trace": [
+    {
+      "index": 1,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.5775,
+      "test_acc": 0.6225,
+      "test_macro_f1": 0.6218979590004092
+    },
+    {
+      "index": 2,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.4125,
+      "test_acc": 0.4415625,
+      "test_macro_f1": 0.4519088122009706
+    },
+    {
+      "index": 3,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 1
+      },
+      "fitness": 0.20875,
+      "test_acc": 0.240625,
+      "test_macro_f1": 0.23884740265018306
+    },
+    {
+      "index": 4,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.46875,
+      "test_acc": 0.463125,
+      "test_macro_f1": 0.4644385248267575
+    },
+    {
+      "index": 5,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.39125,
+      "test_acc": 0.4178125,
+      "test_macro_f1": 0.4165337366370041
+    },
+    {
+      "index": 6,
+      "config": {
+        "lr": 0.001,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.305,
+      "test_acc": 0.3265625,
+      "test_macro_f1": 0.3321598669226379
+    },
+    {
+      "index": 7,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.68125,
+      "test_acc": 0.671875,
+      "test_macro_f1": 0.6687900591206579
+    },
+    {
+      "index": 8,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.67375,
+      "test_acc": 0.6790625,
+      "test_macro_f1": 0.6776888281929301
+    },
+    {
+      "index": 9,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "res_per_block": 6,
+        "n_blocks": 2
+      },
+      "fitness": 0.54875,
+      "test_acc": 0.5775,
+      "test_macro_f1": 0.5798222271100435
+    },
+    {
+      "index": 10,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 1
+      },
+      "fitness": 0.27,
+      "test_acc": 0.2725,
+      "test_macro_f1": 0.26826431873878764
+    },
+    {
+      "index": 11,
+      "config": {
+        "lr": 0.0001,
+        "filters": 4,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.29625,
+      "test_acc": 0.34375,
+      "test_macro_f1": 0.3430630287413145
+    },
+    {
+      "index": 12,
+      "config": {
+        "lr": 0.0003,
+        "filters": 4,
+        "res_per_block": 6,
+        "n_blocks": 1
+      },
+      "fitness": 0.24625,
+      "test_acc": 0.3015625,
+      "test_macro_f1": 0.30516684559895163
+    },
+    {
+      "index": 13,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "res_per_block": 10,
+        "n_blocks": 2
+      },
+      "fitness": 0.51375,
+      "test_acc": 0.514375,
+      "test_macro_f1": 0.5156452166189931
+    },
+    {
+      "index": 14,
+      "config": {
+        "lr": 3e-05,
+        "filters": 4,
+        "res_per_block": 8,
+        "n_blocks": 2
+      },
+      "fitness": 0.35625,
+      "test_acc": 0.3578125,
+      "test_macro_f1": 0.3458641300888912
+    }
+  ],
+  "ga_history": null
+}

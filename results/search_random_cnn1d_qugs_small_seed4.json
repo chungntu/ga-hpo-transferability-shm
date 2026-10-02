@@ -1,0 +1,192 @@
+{
+  "strategy": "random",
+  "model": "cnn1d",
+  "dataset": "qugs_small",
+  "seed": 4,
+  "epochs": 40,
+  "window": 2048,
+  "scaler": "per_window",
+  "unique_evaluations": 14,
+  "wall_time_sec": 228.68024110002443,
+  "split_digest": "1b7f6c47d389",
+  "best_config": {
+    "lr": 3e-05,
+    "filters": 32,
+    "n_blocks": 4,
+    "kernel_size": 9
+  },
+  "best_val_acc": 0.91375,
+  "best_test_acc": 0.9203125,
+  "best_test_macro_f1": 0.9196073345531521,
+  "trace": [
+    {
+      "index": 1,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.84125,
+      "test_acc": 0.83,
+      "test_macro_f1": 0.8216683366406642
+    },
+    {
+      "index": 2,
+      "config": {
+        "lr": 0.001,
+        "filters": 8,
+        "n_blocks": 3,
+        "kernel_size": 5
+      },
+      "fitness": 0.79875,
+      "test_acc": 0.805625,
+      "test_macro_f1": 0.8089234023494918
+    },
+    {
+      "index": 3,
+      "config": {
+        "lr": 3e-05,
+        "filters": 16,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.795,
+      "test_acc": 0.7940625,
+      "test_macro_f1": 0.794139244570423
+    },
+    {
+      "index": 4,
+      "config": {
+        "lr": 3e-05,
+        "filters": 8,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.72,
+      "test_acc": 0.7028125,
+      "test_macro_f1": 0.7008635668413138
+    },
+    {
+      "index": 5,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.82375,
+      "test_acc": 0.833125,
+      "test_macro_f1": 0.824109256328506
+    },
+    {
+      "index": 6,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.74125,
+      "test_acc": 0.749375,
+      "test_macro_f1": 0.739266218616865
+    },
+    {
+      "index": 7,
+      "config": {
+        "lr": 0.0003,
+        "filters": 32,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.89,
+      "test_acc": 0.8975,
+      "test_macro_f1": 0.8965423349860387
+    },
+    {
+      "index": 8,
+      "config": {
+        "lr": 3e-05,
+        "filters": 32,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.91375,
+      "test_acc": 0.9203125,
+      "test_macro_f1": 0.9196073345531521
+    },
+    {
+      "index": 9,
+      "config": {
+        "lr": 0.0001,
+        "filters": 8,
+        "n_blocks": 3,
+        "kernel_size": 9
+      },
+      "fitness": 0.78125,
+      "test_acc": 0.77875,
+      "test_macro_f1": 0.7711330952747222
+    },
+    {
+      "index": 10,
+      "config": {
+        "lr": 0.0003,
+        "filters": 8,
+        "n_blocks": 5,
+        "kernel_size": 9
+      },
+      "fitness": 0.7525,
+      "test_acc": 0.7625,
+      "test_macro_f1": 0.7519388693356687
+    },
+    {
+      "index": 11,
+      "config": {
+        "lr": 0.0001,
+        "filters": 16,
+        "n_blocks": 4,
+        "kernel_size": 9
+      },
+      "fitness": 0.88,
+      "test_acc": 0.87875,
+      "test_macro_f1": 0.8700457674193414
+    },
+    {
+      "index": 12,
+      "config": {
+        "lr": 0.001,
+        "filters": 16,
+        "n_blocks": 3,
+        "kernel_size": 5
+      },
+      "fitness": 0.81,
+      "test_acc": 0.804375,
+      "test_macro_f1": 0.7826528838103911
+    },
+    {
+      "index": 13,
+      "config": {
+        "lr": 0.0003,
+        "filters": 16,
+        "n_blocks": 3,
+        "kernel_size": 5
+      },
+      "fitness": 0.79,
+      "test_acc": 0.779375,
+      "test_macro_f1": 0.7632300559071971
+    },
+    {
+      "index": 14,
+      "config": {
+        "lr": 0.001,
+        "filters": 32,
+        "n_blocks": 4,
+        "kernel_size": 5
+      },
+      "fitness": 0.38875,
+      "test_acc": 0.384375,
+      "test_macro_f1": 0.23931029465112016
+    }
+  ],
+  "ga_history": null
+}
