@@ -24,7 +24,7 @@ The remainder of the paper is organised as follows. Section 2 describes the benc
 
 ### 2.1 Datasets and scenarios
 
-The choice of input follows from what damage does to a structure. Damage makes part of the structure less stiff, which changes its natural frequencies and its mode shapes. A frequency change can be seen from any single sensor. A mode-shape change, however, concerns how different points of the structure move relative to each other, so it can only be seen by comparing several sensors recorded at the same time. A single-channel input therefore shows the network only frequency information, while a multi-channel input shows it both kinds of information (Figure 1).
+Figure 1 shows the two input formulations compared in this study. As explained in Section 1, the single-channel input carries only frequency information, whereas the multi-channel input also carries the relative motion between sensor positions.
 
 ![Figure 1](figures/fig1_input_formulation.png)
 
