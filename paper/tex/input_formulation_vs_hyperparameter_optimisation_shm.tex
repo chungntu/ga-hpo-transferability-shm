@@ -52,28 +52,21 @@ QUGS
 \tableofcontents
 
 % =====================================================================
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 
-Vibration-based structural health monitoring detects damage from the way a structure vibrates. Deep neural networks are now widely used for this task because they can learn directly from raw acceleration signals, without hand-crafted features. Building such a network, however, requires three decisions before any training starts. The first is how the sensor signals are presented to the network. The second is which hyperparameters it uses, such as the learning rate and the size of the network. The third is which search algorithm is used to find well-performing hyperparameters.
+Vibration-based structural health monitoring detects damage from changes in the way a structure vibrates. Damage reduces local stiffness and so alters both the natural frequencies and the mode shapes of a structure; frequencies can be measured with a single sensor, whereas mode shapes require several sensors recorded at the same time~\cite{doebling1996,fan2011}. Deep neural networks are now widely used to detect these changes because they learn directly from raw acceleration signals, without hand-crafted features. Convolutional networks are well established for this task~\cite{abdeljaber2017}, as are dilated-convolution models such as WaveNet~\cite{vandenoord2016,dabbous2024}. Building such a network, however, requires three decisions before any training starts: how the sensor signals are presented to the network, which hyperparameters it uses, such as the learning rate and the size of the network, and which search algorithm is used to find well-performing hyperparameters.
 
-Among these decisions, the search for hyperparameters has received the most attention, and genetic algorithms in particular are often recommended for it. Yet the three decisions are not equally important, for a reason that follows from what each one controls. The input determines what information is available to the network, and no network can learn what is not in its input. The hyperparameters determine how effectively the network uses that information. The search algorithm does not change which setting is best; it only changes how many trainings are needed to find it.
+Of these decisions, the search for hyperparameters has received the most attention. Random search~\cite{bergstra2012}, Bayesian methods that use earlier results to choose the next trial~\cite{bergstra2011,snoek2012}, methods that stop poor settings early~\cite{li2018} and, often in structural health monitoring, genetic algorithms~\cite{lee2021,santos2017} are all in use. In general machine learning, studies have measured how much tuning improves a model and which hyperparameters matter~\cite{probst2019,vanrijn2018}, and whether well-performing settings carry over between datasets~\cite{wistuba2015,wistuba2016}, a question different from domain adaptation, which reuses a trained model on new data~\cite{rezazadeh2026}. Search methods are also commonly compared on tables of results trained in advance, so that every method sees exactly the same outcomes~\cite{ying2019,klein2019,eggensperger2021}.
 
-This reasoning predicts a clear order of importance: the input first, the hyperparameters second and the search algorithm last. If the prediction holds, a practitioner with limited computing time should spend it in the same order. To our knowledge, however, the three decisions have not been compared in the same experiments, on the same data and with the same scoring, so the size of each effect is not known.
+The first decision, how the signals are presented, has received far less attention, although both conventions are used in practice. Abdeljaber et al.~\cite{abdeljaber2017} trained a separate network on the signal of each sensor, and Teng et al.~\cite{teng2021} compared one network that receives all sensor signals together with several per-sensor networks whose decisions are combined. Yet this choice determines what information the network receives. A single-channel input shows the network only frequency information, whereas a multi-channel input also shows how different points of the structure move relative to each other. The difference matters most on real structures, where temperature and other environmental effects also change the frequencies, sometimes by more than damage does, as shown on the Z24 bridge~\cite{peeters2001}.
 
-This paper makes that comparison on two standard benchmarks, the Z24 bridge and the QUGS laboratory frame. Training and test data are always taken from different measurements, so that the scores reflect performance on new data. Two network designs are used, every hyperparameter setting in the search space is trained, and seven search algorithms are then compared on these results at exactly the same cost.
+The three decisions are therefore not equally important, for a reason that follows from what each one controls. The input determines what information is available to the network, and no network can learn what is not in its input. The hyperparameters determine how effectively the network uses that information. The search algorithm does not change which setting is best; it only changes how many trainings are needed to find it. This reasoning predicts a clear order of importance: the input first, the hyperparameters second and the search algorithm last. If the prediction holds, a practitioner with limited computing time should spend it in the same order.
 
-The results confirm the predicted order. Presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; choosing the best hyperparameter setting instead of a typical one raises it by a further 0.12 to 0.32 in six of eight cases; and the choice of search algorithm changes it by only about 0.02. Section~\ref{sec:related} reviews related work and Section~\ref{sec:methods} describes the data, the evaluation and the models. Section~\ref{sec:results} presents the results for each decision in turn, and Sections~\ref{sec:discussion} and~\ref{sec:conclusion} discuss what they mean in practice.
+Testing this prediction requires comparing the three decisions in the same experiments, on the same data and with the same scoring, which, to our knowledge, has not yet been done. It also requires test scores that can be trusted. Test scores are reliable only if training and test data are truly independent, and this condition is easily broken when samples are cut from the same recording~\cite{kapoor2023}. A fair comparison of the three decisions must therefore keep every measurement entirely in either the training data or the test data.
 
-% =====================================================================
-\section{Related work}\label{sec:related}
+This paper makes that comparison on two standard benchmarks, the Z24 bridge~\cite{maeck2003,reynders2009} and the QUGS laboratory frame~\cite{abdeljaber2017}, with training and test data always taken from different measurements. Its contributions are threefold. First, it measures the effects of the input formulation, of hyperparameter tuning and of the search algorithm within one protocol, using two network designs and every setting of the search space, and shows that they follow the predicted order: presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; choosing the best hyperparameter setting instead of a typical one raises it by a further 0.12 to 0.32 in six of eight cases; and the choice of search algorithm changes it by only about 0.02. Second, it shows that tuned settings transfer between the two benchmarks without measurable loss, provided the network performs well on the benchmark used for tuning. Third, by replaying seven search algorithms on the fully trained search space at the same cost, it shows when each algorithm is preferable, and that the fixed schedule of the genetic algorithm, rather than its principle, limits its performance.
 
-Damage reduces the stiffness of a structure and so changes both its natural frequencies and its mode shapes. Frequencies can be measured with one sensor, whereas mode shapes require several sensors recorded at the same time~\cite{doebling1996,fan2011}. On real structures, temperature and other environmental effects also change the frequencies, sometimes by more than damage does, as shown on the Z24 bridge~\cite{peeters2001}. Z24~\cite{maeck2003,reynders2009} and the QUGS laboratory frame~\cite{abdeljaber2017} are standard benchmarks for studying this problem.
-
-Deep learning has been applied to these benchmarks in several forms. Convolutional networks applied directly to acceleration signals are well established for damage detection~\cite{abdeljaber2017}, as are dilated-convolution models such as WaveNet~\cite{vandenoord2016,dabbous2024}. Both input conventions are used in practice. Abdeljaber et al.~\cite{abdeljaber2017} trained a separate network on the signal of each sensor, and Teng et al.~\cite{teng2021} compared one network that receives all sensor signals together with several per-sensor networks whose decisions are combined. The choice between them determines what information the network receives, yet it has received far less attention than the tuning of hyperparameters.
-
-The hyperparameters of these networks are tuned with random search~\cite{bergstra2012}, with Bayesian methods that use earlier results to choose the next trial~\cite{bergstra2011,snoek2012}, with methods that stop poor settings early~\cite{li2018}, or, often in structural health monitoring, with genetic algorithms~\cite{lee2021,santos2017}. In general machine learning, studies have measured how much tuning improves a model and which hyperparameters matter~\cite{probst2019,vanrijn2018}. Others have asked whether well-performing settings carry over between datasets~\cite{wistuba2015,wistuba2016}. This question differs from domain adaptation, which reuses a trained model on new data~\cite{rezazadeh2026}. Search methods are often compared on tables of results trained in advance, so that every method sees exactly the same outcomes~\cite{ying2019,klein2019,eggensperger2021}.
-
-Any such comparison is only as reliable as its test scores. Test scores, in turn, are reliable only if training and test data are truly independent, and this condition is easily broken when samples are cut from the same recording~\cite{kapoor2023}. The input, the hyperparameters and the search method have each been studied separately. Their effects have not yet been compared on the same vibration data with independent test sets, and this paper makes that comparison.
+The remainder of the paper is organised as follows. Section~\ref{sec:methods} describes the benchmarks, the evaluation protocol, the network designs and the metrics. Section~\ref{sec:results} presents the results for each decision in turn: the input formulation, hyperparameter tuning and the search algorithm, followed by reference results on both benchmarks. Section~\ref{sec:discussion} discusses what the results mean in practice and the limitations of the study, and Section~\ref{sec:conclusion} concludes.
 
 % =====================================================================
 \section{Methods}\label{sec:methods}
@@ -441,23 +434,6 @@ W.~Fan, P.~Qiao,
 \emph{Structural Health Monitoring}, 10(1):83--111, 2011.
 \url{https://doi.org/10.1177/1475921710365419}
 
-\bibitem{peeters2001}
-B.~Peeters, G.~De~Roeck,
-``One-year monitoring of the Z24-Bridge: environmental effects versus damage events,''
-\emph{Earthquake Engineering \& Structural Dynamics}, 30(2):149--171, 2001.
-
-\bibitem{maeck2003}
-J.~Maeck, G.~De~Roeck,
-``Description of Z24 benchmark,''
-\emph{Mechanical Systems and Signal Processing}, 17(1):127--131, 2003.
-\url{https://doi.org/10.1006/mssp.2002.1548}
-
-\bibitem{reynders2009}
-E.~Reynders, G.~De~Roeck,
-``Continuous vibration monitoring and progressive damage testing on the Z24 bridge,''
-in \emph{Encyclopedia of Structural Health Monitoring}, Wiley, 2009.
-\url{https://doi.org/10.1002/9780470061626.shm165}
-
 \bibitem{abdeljaber2017}
 O.~Abdeljaber, O.~Avci, S.~Kiranyaz, M.~Gabbouj, D.~J. Inman,
 ``Real-time vibration-based structural damage detection using one-dimensional convolutional neural networks,''
@@ -475,12 +451,6 @@ A.~Dabbous, R.~Berta, M.~Fresta, H.~Ballout, L.~Lazzaroni, F.~Bellotti,
 ``Bringing intelligence to the edge for structural health monitoring: the case study of the Z24 bridge,''
 \emph{IEEE Open Journal of the Industrial Electronics Society}, 5:781--794, 2024.
 \url{https://doi.org/10.1109/OJIES.2024.3434341}
-
-\bibitem{teng2021}
-S.~Teng, G.~Chen, Z.~Liu, L.~Cheng, X.~Sun,
-``Multi-sensor and decision-level fusion-based structural damage detection using a one-dimensional convolutional neural network,''
-\emph{Sensors}, 21(12):3950, 2021.
-\url{https://doi.org/10.3390/s21123950}
 
 \bibitem{bergstra2012}
 J.~Bergstra, Y.~Bengio,
@@ -561,11 +531,34 @@ K.~Eggensperger, P.~M\"uller, N.~Mallik, M.~Feurer, R.~Sass, A.~Klein, N.~Awad, 
 ``HPOBench: a collection of reproducible multi-fidelity benchmark problems for HPO,''
 \emph{Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks}, 2021.
 
+\bibitem{teng2021}
+S.~Teng, G.~Chen, Z.~Liu, L.~Cheng, X.~Sun,
+``Multi-sensor and decision-level fusion-based structural damage detection using a one-dimensional convolutional neural network,''
+\emph{Sensors}, 21(12):3950, 2021.
+\url{https://doi.org/10.3390/s21123950}
+
+\bibitem{peeters2001}
+B.~Peeters, G.~De~Roeck,
+``One-year monitoring of the Z24-Bridge: environmental effects versus damage events,''
+\emph{Earthquake Engineering \& Structural Dynamics}, 30(2):149--171, 2001.
+
 \bibitem{kapoor2023}
 S.~Kapoor, A.~Narayanan,
 ``Leakage and the reproducibility crisis in machine-learning-based science,''
 \emph{Patterns}, 4(9):100804, 2023.
 \url{https://doi.org/10.1016/j.patter.2023.100804}
+
+\bibitem{maeck2003}
+J.~Maeck, G.~De~Roeck,
+``Description of Z24 benchmark,''
+\emph{Mechanical Systems and Signal Processing}, 17(1):127--131, 2003.
+\url{https://doi.org/10.1006/mssp.2002.1548}
+
+\bibitem{reynders2009}
+E.~Reynders, G.~De~Roeck,
+``Continuous vibration monitoring and progressive damage testing on the Z24 bridge,''
+in \emph{Encyclopedia of Structural Health Monitoring}, Wiley, 2009.
+\url{https://doi.org/10.1002/9780470061626.shm165}
 
 \end{thebibliography}
 
