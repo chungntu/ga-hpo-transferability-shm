@@ -1,0 +1,107 @@
+{
+  "config": {
+    "filters": 32,
+    "n_blocks": 4,
+    "kernel_size": 9
+  },
+  "lr": 0.001,
+  "epochs": 40,
+  "rows": [
+    {
+      "case": "z24_5cls",
+      "multichannel": false,
+      "n_channels": 1,
+      "n_classes": 5,
+      "n_train": 4770,
+      "train_acc": 0.9930817610062893,
+      "cnn_f1": 0.6626735847966767,
+      "cnn_bal": 0.6838709677419355,
+      "cnn_acc": 0.6958041958041958,
+      "psd_f1": 0.6820432073144032
+    },
+    {
+      "case": "z24_5cls",
+      "multichannel": true,
+      "n_channels": 5,
+      "n_classes": 5,
+      "n_train": 954,
+      "train_acc": 1.0,
+      "cnn_f1": 0.9140275973858925,
+      "cnn_bal": 0.9275201612903226,
+      "cnn_acc": 0.9195804195804196,
+      "psd_f1": 0.9772914759201612
+    },
+    {
+      "case": "z24_15cls",
+      "multichannel": false,
+      "n_channels": 1,
+      "n_classes": 15,
+      "n_train": 14365,
+      "train_acc": 0.9695092238078663,
+      "cnn_f1": 0.30321736967317764,
+      "cnn_bal": 0.3242741935483871,
+      "cnn_acc": 0.32980561555075594,
+      "psd_f1": 0.488826230991375
+    },
+    {
+      "case": "z24_15cls",
+      "multichannel": true,
+      "n_channels": 5,
+      "n_classes": 15,
+      "n_train": 2873,
+      "train_acc": 1.0,
+      "cnn_f1": 0.784599075082766,
+      "cnn_bal": 0.7874663978494624,
+      "cnn_acc": 0.7807775377969762,
+      "psd_f1": 0.8776112196285666
+    },
+    {
+      "case": "qugs_5cls",
+      "multichannel": false,
+      "n_channels": 1,
+      "n_classes": 5,
+      "n_train": 2400,
+      "train_acc": 1.0,
+      "cnn_f1": 0.9671339778303402,
+      "cnn_bal": 0.9671875,
+      "cnn_acc": 0.9671875,
+      "psd_f1": 0.9990624994277951
+    },
+    {
+      "case": "qugs_5cls",
+      "multichannel": true,
+      "n_channels": 5,
+      "n_classes": 5,
+      "n_train": 480,
+      "train_acc": 1.0,
+      "cnn_f1": 1.0,
+      "cnn_bal": 1.0,
+      "cnn_acc": 1.0,
+      "psd_f1": 1.0
+    },
+    {
+      "case": "qugs_15cls",
+      "multichannel": false,
+      "n_channels": 1,
+      "n_classes": 15,
+      "n_train": 5400,
+      "train_acc": 1.0,
+      "cnn_f1": 0.8826248386759789,
+      "cnn_bal": 0.8837500000000001,
+      "cnn_acc": 0.88375,
+      "psd_f1": 0.9974998263768318
+    },
+    {
+      "case": "qugs_15cls",
+      "multichannel": true,
+      "n_channels": 15,
+      "n_classes": 15,
+      "n_train": 360,
+      "train_acc": 1.0,
+      "cnn_f1": 1.0,
+      "cnn_bal": 1.0,
+      "cnn_acc": 1.0,
+      "psd_f1": 1.0
+    }
+  ]
+}

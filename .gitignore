@@ -1,0 +1,56 @@
+# Raw and derived data: 3.5 GB, all of it re-downloadable or regenerable.
+# See README for how to obtain each dataset.
+data/
+*.npy
+*.mat
+*.TXT
+*.txt
+
+# Per-run detail dumps: 94 MB across 5452 files (training histories, confusion
+# matrices, per-class recalls, raw predictions). Nothing in analysis/ reads them
+# -- every table is rebuilt from the search_*.json traces and runs.csv, which
+# ARE tracked. Kept locally and inside the backup archive.
+results/details/
+
+# but the per-epoch curve extract IS versioned: it is what makes the offline
+# HPO benchmark reproducible without the 94 MB of detail dumps
+!results/curves.json
+
+# Trained weights
+*.h5
+*.keras
+*.pt
+*.pth
+models/
+
+# Archives
+*.zip
+*.rar
+*.7z
+
+# Manuscript sources live outside this repository
+*.docx
+*.pptx
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.ico
+.vscode/
+.idea/
+
+# Material not used by the paper; kept locally only
+un_use/
+logs/
+!requirements.txt
+!paper/figures/*.pdf
+!paper/tex/*.pdf

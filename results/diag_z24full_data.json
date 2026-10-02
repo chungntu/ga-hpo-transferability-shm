@@ -1,0 +1,30 @@
+{
+  "config": {
+    "filters": 32,
+    "n_blocks": 4,
+    "kernel_size": 9
+  },
+  "lr": 0.0003,
+  "rows": [
+    {
+      "stride_mult": 2,
+      "n_train": 46336,
+      "epochs": 40,
+      "train_acc": 0.9725483425414365,
+      "val_acc": 0.26085858585858585,
+      "test_acc": 0.1786474973375932,
+      "test_macro_f1": 0.1630084753225692,
+      "train_time_sec": 319.66698010009713
+    },
+    {
+      "stride_mult": 1,
+      "n_train": 92449,
+      "epochs": 40,
+      "train_acc": 0.9565922833129618,
+      "val_acc": 0.32352755108496234,
+      "test_acc": 0.2392435461276766,
+      "test_macro_f1": 0.20459251994152944,
+      "train_time_sec": 607.4960151999258
+    }
+  ]
+}
