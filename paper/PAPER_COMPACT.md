@@ -14,7 +14,7 @@ This reasoning predicts a clear order of importance: the input first, the hyperp
 
 This paper makes that comparison on two standard benchmarks, the Z24 bridge and the QUGS laboratory frame. Training and test data are always taken from different measurements, so that the scores reflect performance on new data. Two network designs are used, every hyperparameter setting in the search space is trained, and seven search algorithms are then compared on these results at exactly the same cost.
 
-The results confirm the predicted order. Presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; tuning the hyperparameters adds 0.12 to 0.32; and the choice of search algorithm changes the result by about 0.02. Section 2 reviews related work and Section 3 describes the data, the evaluation and the models. Section 4 presents the results for each decision in turn, and Sections 5 and 6 discuss what they mean in practice.
+The results confirm the predicted order. Presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; choosing the best hyperparameter setting instead of a typical one raises it by a further 0.12 to 0.32 in six of eight cases; and the choice of search algorithm changes it by only about 0.02. Section 2 reviews related work and Section 3 describes the data, the evaluation and the models. Section 4 presents the results for each decision in turn, and Sections 5 and 6 discuss what they mean in practice.
 
 ## 2 Related work
 
@@ -231,7 +231,7 @@ The contrast between the two benchmarks has a likely explanation, although these
 
 ## 5 Discussion
 
-Taken together, the results follow the order predicted in the introduction (Table 10). Changing to a multi-channel input, which gives the network more information, adds about 0.48 macro-F1. Tuning the hyperparameters, which helps the network use that information, adds 0.12 to 0.32. Using a Bayesian method instead of random search, which only finds well-performing settings faster, adds about 0.02. Tuning on a different benchmark instead of the target one makes no measurable difference with five classes, provided the network performs well on that benchmark. Using a genetic algorithm instead of random search changes the regret by less than 0.01 in either direction.
+Taken together, the results follow the order predicted in the introduction (Table 10). Changing to a multi-channel input, which gives the network more information, raises 15-class macro-F1 on Z24 by about 0.48, from 0.30 to 0.78. Choosing the best hyperparameter setting instead of a typical one, which helps the network use that information, raises macro-F1 by 0.12 to 0.32 in six of eight cases. Using a Bayesian method instead of random search with the same number of trainings, which only brings the search closer to the best setting, improves macro-F1 by about 0.02. Tuning on a different benchmark instead of the target one makes no measurable difference with five classes, provided the network performs well on that benchmark. Using a genetic algorithm instead of random search changes the regret by less than 0.01 in either direction.
 
 **Table 10.** Size of each effect, in test macro-F1.
 
@@ -251,6 +251,6 @@ The main limitation is the number of benchmarks. Only two were used, and one of 
 
 ## 6 Conclusion
 
-A network cannot learn what is not in its input, tuning helps it use what is there, and the search algorithm only changes how quickly well-performing settings are found. On two vibration benchmarks, tested with training and test data from different measurements, the measured effects follow this order. A multi-channel input raises 15-class macro-F1 on Z24 from 0.30 to 0.78. Choosing the best hyperparameters instead of a typical setting adds 0.12 to 0.32 in six of eight cases. The choice of search algorithm changes the result by only about 0.02.
+A network cannot learn what is not in its input, tuning helps it use what is there, and the search algorithm only changes how quickly well-performing settings are found. On two vibration benchmarks, tested with training and test data from different measurements, the measured effects follow this order. A multi-channel input raises 15-class macro-F1 on Z24 from 0.30 to 0.78. Choosing the best hyperparameter setting instead of a typical one raises macro-F1 by a further 0.12 to 0.32 in six of eight cases. The choice of search algorithm changes the result by only about 0.02.
 
 Two practical findings follow. First, the best settings found on one benchmark work equally well on the other when the network performs well on both, so tuning does not need to be repeated for each structure. Second, if ten or more trainings can be afforded for tuning, Bayesian optimisation is preferable to random or genetic search, because it finds settings closer to the best one for the same number of trainings. For damage detection from vibration, the most valuable decision is therefore how the sensor signals are presented to the network.
