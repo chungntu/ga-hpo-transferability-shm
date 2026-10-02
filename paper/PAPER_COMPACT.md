@@ -6,29 +6,23 @@ Deep models for vibration-based damage detection are often improved by tuning th
 
 ## 1 Introduction
 
-Vibration-based structural health monitoring detects damage from the way a structure vibrates. Deep neural networks are now widely used for this task because they can learn directly from raw acceleration signals, without hand-crafted features. Building such a network, however, requires three decisions before any training starts. The first is how the sensor signals are presented to the network. The second is which hyperparameters it uses, such as the learning rate and the size of the network. The third is which search algorithm is used to find well-performing hyperparameters.
+Vibration-based structural health monitoring detects damage from changes in the way a structure vibrates. Damage reduces local stiffness and so alters both the natural frequencies and the mode shapes of a structure; frequencies can be measured with a single sensor, whereas mode shapes require several sensors recorded at the same time (Doebling et al., 1996; Fan and Qiao, 2011). Deep neural networks are now widely used to detect these changes because they learn directly from raw acceleration signals, without hand-crafted features. Convolutional networks are well established for this task (Abdeljaber et al., 2017), as are dilated-convolution models such as WaveNet (van den Oord et al., 2016; Dabbous et al., 2024). Building such a network, however, requires three decisions before any training starts: how the sensor signals are presented to the network, which hyperparameters it uses, such as the learning rate and the size of the network, and which search algorithm is used to find well-performing hyperparameters.
 
-Among these decisions, the search for hyperparameters has received the most attention, and genetic algorithms in particular are often recommended for it. Yet the three decisions are not equally important, for a reason that follows from what each one controls. The input determines what information is available to the network, and no network can learn what is not in its input. The hyperparameters determine how effectively the network uses that information. The search algorithm does not change which setting is best; it only changes how many trainings are needed to find it.
+Of these decisions, the search for hyperparameters has received the most attention. Random search (Bergstra and Bengio, 2012), Bayesian methods that use earlier results to choose the next trial (Bergstra et al., 2011; Snoek et al., 2012), methods that stop poor settings early (Li et al., 2018) and, often in structural health monitoring, genetic algorithms (Lee et al., 2021; Santos et al., 2017) are all in use. In general machine learning, studies have measured how much tuning improves a model and which hyperparameters matter (Probst et al., 2019; van Rijn and Hutter, 2018), and whether well-performing settings carry over between datasets (Wistuba et al., 2015, 2016), a question different from domain adaptation, which reuses a trained model on new data (Rezazadeh et al., 2026). Search methods are also commonly compared on tables of results trained in advance, so that every method sees exactly the same outcomes (Ying et al., 2019; Klein and Hutter, 2019; Eggensperger et al., 2021).
 
-This reasoning predicts a clear order of importance: the input first, the hyperparameters second and the search algorithm last. If the prediction holds, a practitioner with limited computing time should spend it in the same order. To our knowledge, however, the three decisions have not been compared in the same experiments, on the same data and with the same scoring, so the size of each effect is not known.
+The first decision, how the signals are presented, has received far less attention, although both conventions are used in practice. Abdeljaber et al. (2017) trained a separate network on the signal of each sensor, and Teng et al. (2021) compared one network that receives all sensor signals together with several per-sensor networks whose decisions are combined. Yet this choice determines what information the network receives. A single-channel input shows the network only frequency information, whereas a multi-channel input also shows how different points of the structure move relative to each other. The difference matters most on real structures, where temperature and other environmental effects also change the frequencies, sometimes by more than damage does, as shown on the Z24 bridge (Peeters and De Roeck, 2001).
 
-This paper makes that comparison on two standard benchmarks, the Z24 bridge and the QUGS laboratory frame. Training and test data are always taken from different measurements, so that the scores reflect performance on new data. Two network designs are used, every hyperparameter setting in the search space is trained, and seven search algorithms are then compared on these results at exactly the same cost.
+The three decisions are therefore not equally important, for a reason that follows from what each one controls. The input determines what information is available to the network, and no network can learn what is not in its input. The hyperparameters determine how effectively the network uses that information. The search algorithm does not change which setting is best; it only changes how many trainings are needed to find it. This reasoning predicts a clear order of importance: the input first, the hyperparameters second and the search algorithm last. If the prediction holds, a practitioner with limited computing time should spend it in the same order.
 
-The results confirm the predicted order. Presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; choosing the best hyperparameter setting instead of a typical one raises it by a further 0.12 to 0.32 in six of eight cases; and the choice of search algorithm changes it by only about 0.02. Section 2 reviews related work and Section 3 describes the data, the evaluation and the models. Section 4 presents the results for each decision in turn, and Sections 5 and 6 discuss what they mean in practice.
+Testing this prediction requires comparing the three decisions in the same experiments, on the same data and with the same scoring, which, to our knowledge, has not yet been done. It also requires test scores that can be trusted. Test scores are reliable only if training and test data are truly independent, and this condition is easily broken when samples are cut from the same recording (Kapoor and Narayanan, 2023). A fair comparison of the three decisions must therefore keep every measurement entirely in either the training data or the test data.
 
-## 2 Related work
+This paper makes that comparison on two standard benchmarks, the Z24 bridge (Maeck and De Roeck, 2003; Reynders and De Roeck, 2009) and the QUGS laboratory frame (Abdeljaber et al., 2017), with training and test data always taken from different measurements. Its contributions are threefold. First, it measures the effects of the input formulation, of hyperparameter tuning and of the search algorithm within one protocol, using two network designs and every setting of the search space, and shows that they follow the predicted order: presenting all sensors to the network together raises 15-class macro-F1 on Z24 from 0.30 to 0.78; choosing the best hyperparameter setting instead of a typical one raises it by a further 0.12 to 0.32 in six of eight cases; and the choice of search algorithm changes it by only about 0.02. Second, it shows that tuned settings transfer between the two benchmarks without measurable loss, provided the network performs well on the benchmark used for tuning. Third, by replaying seven search algorithms on the fully trained search space at the same cost, it shows when each algorithm is preferable, and that the fixed schedule of the genetic algorithm, rather than its principle, limits its performance.
 
-Damage reduces the stiffness of a structure and so changes both its natural frequencies and its mode shapes. Frequencies can be measured with one sensor, whereas mode shapes require several sensors recorded at the same time (Doebling et al., 1996; Fan and Qiao, 2011). On real structures, temperature and other environmental effects also change the frequencies, sometimes by more than damage does, as shown on the Z24 bridge (Peeters and De Roeck, 2001). Z24 (Maeck and De Roeck, 2003; Reynders and De Roeck, 2009) and the QUGS laboratory frame (Abdeljaber et al., 2017) are standard benchmarks for studying this problem.
+The remainder of the paper is organised as follows. Section 2 describes the benchmarks, the evaluation protocol, the network designs and the metrics. Section 3 presents the results for each decision in turn: the input formulation, hyperparameter tuning and the search algorithm, followed by reference results on both benchmarks. Section 4 discusses what the results mean in practice and the limitations of the study, and Section 5 concludes.
 
-Deep learning has been applied to these benchmarks in several forms. Convolutional networks applied directly to acceleration signals are well established for damage detection (Abdeljaber et al., 2017), as are dilated-convolution models such as WaveNet (van den Oord et al., 2016; Dabbous et al., 2024). Both input conventions are used in practice. Abdeljaber et al. (2017) trained a separate network on the signal of each sensor, and Teng et al. (2021) compared one network that receives all sensor signals together with several per-sensor networks whose decisions are combined. The choice between them determines what information the network receives, yet it has received far less attention than the tuning of hyperparameters.
+## 2 Methods
 
-The hyperparameters of these networks are tuned with random search (Bergstra and Bengio, 2012), with Bayesian methods that use earlier results to choose the next trial (Bergstra et al., 2011; Snoek et al., 2012), with methods that stop poor settings early (Li et al., 2018), or, often in structural health monitoring, with genetic algorithms (Lee et al., 2021; Santos et al., 2017). In general machine learning, studies have measured how much tuning improves a model and which hyperparameters matter (Probst et al., 2019; van Rijn and Hutter, 2018). Others have asked whether well-performing settings carry over between datasets (Wistuba et al., 2015, 2016). This question differs from domain adaptation, which reuses a trained model on new data (Rezazadeh et al., 2026). Search methods are often compared on tables of results trained in advance, so that every method sees exactly the same outcomes (Ying et al., 2019; Klein and Hutter, 2019; Eggensperger et al., 2021).
-
-Any such comparison is only as reliable as its test scores. Test scores, in turn, are reliable only if training and test data are truly independent, and this condition is easily broken when samples are cut from the same recording (Kapoor and Narayanan, 2023). The input, the hyperparameters and the search method have each been studied separately. Their effects have not yet been compared on the same vibration data with independent test sets, and this paper makes that comparison.
-
-## 3 Methods
-
-### 3.1 Datasets and scenarios
+### 2.1 Datasets and scenarios
 
 The choice of input follows from what damage does to a structure. Damage makes part of the structure less stiff, which changes its natural frequencies and its mode shapes. A frequency change can be seen from any single sensor. A mode-shape change, however, concerns how different points of the structure move relative to each other, so it can only be seen by comparing several sensors recorded at the same time. A single-channel input therefore shows the network only frequency information, while a multi-channel input shows it both kinds of information (Figure 1).
 
@@ -58,11 +52,11 @@ Both benchmarks are used with five and with fifteen classes, giving four scenari
 | Sensors in multi-channel input | 5 (the fixed ones) | 5 or 15 |
 | Test data | Held-out sensor setups | Campaign B |
 
-### 3.2 Evaluation protocol
+### 2.2 Evaluation protocol
 
 These data must be split with care, because a test score is only meaningful if the test data are new to the network. Windows cut from the same measurement are not new to each other: they share the same excitation, the same sensor settings and the same weather. A network can therefore learn to recognise which measurement a window came from and guess its label from that, without learning anything about damage.
 
-To prevent this, whole measurements are always kept together, either all in training or all in testing. On Z24, whole sensor setups are held out for testing. The main experiments use a different random choice of setups for each split. The reference results of Section 4.4 hold out each of the nine setups in turn, which is known as leave-one-setup-out cross-validation. On QUGS, the network is trained on campaign A and tested on campaign B (Figure 2).
+To prevent this, whole measurements are always kept together, either all in training or all in testing. On Z24, whole sensor setups are held out for testing. The main experiments use a different random choice of setups for each split. The reference results of Section 3.4 hold out each of the nine setups in turn, which is known as leave-one-setup-out cross-validation. On QUGS, the network is trained on campaign A and tested on campaign B (Figure 2).
 
 ![Figure 2](figures/fig2_split.png)
 
@@ -70,7 +64,7 @@ To prevent this, whole measurements are always kept together, either all in trai
 
 Two further safeguards support this split. Each window records which measurement it came from, and the code checks automatically, every time the data are loaded, that no measurement appears in both training and testing. Each window is also normalised on its own, which removes its overall amplitude; amplitude mainly identifies the measurement rather than the damage, and removing it improves accuracy on new measurements.
 
-### 3.3 Models and search spaces
+### 2.3 Models and search spaces
 
 Different network architectures favour different patterns, so a result found with only one design might be a property of that design rather than of the problem. Every experiment is therefore repeated with two designs, and a conclusion is drawn only where both agree or where the difference between them is itself explained.
 
@@ -87,7 +81,7 @@ Each design has four hyperparameters: the learning rate, the number of filters, 
 | Dilated layers per block | 6, 8, 10 | Convolutional blocks | 3, 4, 5 |
 | Blocks | 1, 2 | Kernel size | 5, 9 |
 
-### 3.4 Metrics
+### 2.4 Metrics
 
 Once every setting is trained, the best one must be chosen on one set of data and scored on another; otherwise the score is too optimistic. Settings are therefore chosen on a validation set and scored on a separate test set. The main score is macro-F1, the average F1 over all classes, which counts every class equally even when some classes have fewer samples.
 
@@ -95,9 +89,9 @@ To tell whether a gain comes from the input or from the network, a simple refere
 
 Finally, comparisons are made on the same data splits, so that differences caused by the split cancel out. For the search algorithms, cost is counted as the number of full trainings used. Quality is measured by the regret, the gap between the test score of the setting an algorithm finds and that of the best setting in the table.
 
-## 4 Results
+## 3 Results
 
-### 4.1 Effect of the input formulation
+### 3.1 Effect of the input formulation
 
 If the multi-channel input provides the network with more information, accuracy should rise for every classifier, not only for one design. This is what is observed (Table 3, Figure 3). On Z24, the multi-channel input raises the 1D-CNN's macro-F1 from 0.30 to 0.78 with fifteen classes and from 0.66 to 0.91 with five. On QUGS both inputs already score highly, and the multi-channel input reaches 1.000.
 
@@ -135,7 +129,7 @@ The number of sensors matters even with single-channel input, and it acts in the
 
 How much of the extra information a network uses depends on its design. The WaveNet benefits much less from the multi-channel input than the 1D-CNN. On the 15-class Z24 problem its macro-F1 rises only from 0.13 to 0.22. On the 5-class problem it changes little on random splits (0.72 in both cases) and is lower under leave-one-setup-out testing (0.71 against 0.79; Table 8). The information is in the input, but not every design is able to exploit it.
 
-### 4.2 Effect of hyperparameter tuning
+### 3.2 Effect of hyperparameter tuning
 
 Once the input is fixed, tuning cannot add information; it can only help the network use what the input already contains. To measure how much it helps, the best setting, chosen on the validation set, is compared with a typical setting, taken as the median of all settings tried, both scored on the test set.
 
@@ -175,7 +169,7 @@ The ranking of all settings shows the same pattern (Table 6, Figure 6). With fiv
 
 **Figure 6.** Rank agreement of all settings with five classes: between two splits of the same benchmark (blue) and between Z24 and QUGS (orange). Each dot is one pair of splits; bars are means.
 
-### 4.3 Comparison of search strategies
+### 3.3 Comparison of search strategies
 
 Because every setting was trained in advance and its score after every epoch was saved, any search algorithm can be replayed exactly on these results without new training. Seven algorithms were compared in this way at the same cost. They are random search; a genetic algorithm with a population of eight over four generations, and the same algorithm without the generation limit; two Bayesian methods, the tree-structured Parzen estimator and Gaussian-process optimisation; successive halving; and hill climbing. Each was replayed one hundred times on each of 45 result tables (Table 7, Figure 7).
 
@@ -199,9 +193,9 @@ From about ten trainings onward, enough results are available, and the Bayesian 
 
 The genetic algorithm is limited by its schedule rather than by its principle. With a population of eight over four generations it can try only about sixteen different settings, so it cannot use a larger budget. At twenty-eight trainings, random search overtakes it (regret 0.013 against 0.022). Removing the generation limit, without any other change, reduces its regret to 0.004, but even then it remains behind the Bayesian methods.
 
-### 4.4 Reference results on Z24 and QUGS
+### 3.4 Reference results on Z24 and QUGS
 
-In addition, the experiments provide reference scores for both benchmarks under the strict split of Section 3.2 (Table 8). On Z24, with leave-one-setup-out testing, the 1D-CNN with multi-channel input reaches a test accuracy of 0.966 ± 0.039 with five classes and 0.665 ± 0.087 with fifteen. With single-channel input the scores are much lower, 0.786 and 0.286. In that case the simple spectral classifier performs as well as the deep networks or better (Table 3), as expected when the input contains little more than frequency information.
+In addition, the experiments provide reference scores for both benchmarks under the strict split of Section 2.2 (Table 8). On Z24, with leave-one-setup-out testing, the 1D-CNN with multi-channel input reaches a test accuracy of 0.966 ± 0.039 with five classes and 0.665 ± 0.087 with fifteen. With single-channel input the scores are much lower, 0.786 and 0.286. In that case the simple spectral classifier performs as well as the deep networks or better (Table 3), as expected when the input contains little more than frequency information.
 
 **Table 8.** Reference results on Z24 with leave-one-setup-out cross-validation (mean ± 95% confidence interval over nine folds). In the single-channel 15-class case the 1D-CNN uses all sensors of each setup and the WaveNet the five fixed sensors.
 
@@ -229,7 +223,7 @@ QUGS represents the opposite case (Table 9). The simple spectral classifier, usi
 
 The contrast between the two benchmarks has a likely explanation, although these data do not test it. The laboratory frame is excited in a controlled way, so the frequency changes caused by a loosened bolt stand out clearly. On the full-scale bridge, temperature and other environmental effects also change the frequencies, so frequency alone is not enough, and the information carried by several sensors together becomes necessary.
 
-## 5 Discussion
+## 4 Discussion
 
 Taken together, the results follow the order predicted in the introduction (Table 10). Changing to a multi-channel input, which gives the network more information, raises 15-class macro-F1 on Z24 by about 0.48, from 0.30 to 0.78. Choosing the best hyperparameter setting instead of a typical one, which helps the network use that information, raises macro-F1 by 0.12 to 0.32 in six of eight cases. Using a Bayesian method instead of random search with the same number of trainings, which only brings the search closer to the best setting, improves macro-F1 by about 0.02. Tuning on a different benchmark instead of the target one makes no measurable difference with five classes, provided the network performs well on that benchmark. Using a genetic algorithm instead of random search changes the regret by less than 0.01 in either direction.
 
@@ -249,7 +243,7 @@ The use of two network designs proved necessary for reaching these conclusions. 
 
 The main limitation is the number of benchmarks. Only two were used, and one of them, QUGS, is saturated with multi-channel input and cannot rank settings, so the comparison between datasets rests on a single pair and on the single-channel input. A third benchmark with repeated measurements, many sensors recorded together and real environmental variation would give a stronger test of the conclusions.
 
-## 6 Conclusion
+## 5 Conclusion
 
 A network cannot learn what is not in its input, tuning helps it use what is there, and the search algorithm only changes how quickly well-performing settings are found. On two vibration benchmarks, tested with training and test data from different measurements, the measured effects follow this order. A multi-channel input raises 15-class macro-F1 on Z24 from 0.30 to 0.78. Choosing the best hyperparameter setting instead of a typical one raises macro-F1 by a further 0.12 to 0.32 in six of eight cases. The choice of search algorithm changes the result by only about 0.02.
 
