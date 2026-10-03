@@ -30,9 +30,17 @@ Figure 1 shows the two input formulations compared in this study. As explained i
 
 **Figure 1.** The two input formulations. The same five simultaneously recorded signals are presented to the network either as five separate samples of shape (T, 1) or as one sample of shape (T, 5).
 
-The first benchmark, Z24, is a full-scale concrete bridge in Switzerland that was damaged step by step before demolition. It contains fifteen damage states, each measured in nine sensor setups at 100 Hz. The sensors were relocated between setups, except for five reference sensors that remained at the same positions in every setup.
+The first benchmark, Z24, is a full-scale concrete bridge in Switzerland that was damaged step by step before demolition. It contains fifteen damage states, each measured in nine sensor setups at 100 Hz. The sensors were relocated between setups, except for five reference sensors that remained at the same positions in every setup. Figure 2 shows the nine setups along the deck and the reference positions R1–R3.
 
-The second benchmark, QUGS, is a laboratory steel frame that represents a stadium grandstand. It contains 31 states — the undamaged frame and one loosened bolt at each of its thirty joints — measured with thirty accelerometers at 1024 Hz in two separate measurement campaigns.
+![Figure 2](figures/z24_sensor_layout.png)
+
+**Figure 2.** Sensor layout on the Z24 bridge deck, in plan view. Each coloured area is one of the nine sensor setups, with the numbered measurement points along three lines (HH-1 to HH-3). R1–R3 are the reference positions, where sensors stayed in place in every setup. AVT and FVT denote the ambient and forced vibration tests. Source: Z24 benchmark documentation, KU Leuven.
+
+The second benchmark, QUGS, is a laboratory steel frame that represents a stadium grandstand. It contains 31 states — the undamaged frame and one loosened bolt at each of its thirty joints — measured with thirty accelerometers at 1024 Hz in two separate measurement campaigns. Figure 3 shows the frame and the numbering of its joints.
+
+![Figure 3](figures/qugs_frame.png)
+
+**Figure 3.** The QUGS steel frame with its thirty joints numbered. Each joint carries one accelerometer, and each damage state loosens the bolts at one joint. Source: QUGS benchmark, Qatar University.
 
 Both benchmarks are used with five and with fifteen classes, giving four scenarios, and all signals are cut into windows of 2048 samples (Table 1). In the single-channel input, each sensor's window is a separate sample of shape (T, 1). In the multi-channel input, the windows of several sensors at the same time form one sample of shape (T, C). On Z24 the multi-channel input uses only the five fixed sensors, so that each channel always refers to the same position on the bridge. On QUGS, whose sensors never move, it uses five or fifteen sensors.
 
@@ -56,11 +64,11 @@ Both benchmarks are used with five and with fifteen classes, giving four scenari
 
 These data must be split with care, because a test score is only meaningful if the test data are new to the network. Windows cut from the same measurement are not new to each other: they share the same excitation, the same sensor settings and the same weather. A network can therefore learn to recognise which measurement a window came from and guess its label from that, without learning anything about damage.
 
-To prevent this, whole measurements are always kept together, either all in training or all in testing. On Z24, whole sensor setups are held out for testing. The main experiments use a different random choice of setups for each split. The reference results of Section 3.4 hold out each of the nine setups in turn, which is known as leave-one-setup-out cross-validation. On QUGS, the network is trained on campaign A and tested on campaign B (Figure 2).
+To prevent this, whole measurements are always kept together, either all in training or all in testing. On Z24, whole sensor setups are held out for testing. The main experiments use a different random choice of setups for each split. The reference results of Section 3.4 hold out each of the nine setups in turn, which is known as leave-one-setup-out cross-validation. On QUGS, the network is trained on campaign A and tested on campaign B (Figure 4).
 
-![Figure 2](figures/fig2_split.png)
+![Figure 4](figures/fig2_split.png)
 
-**Figure 2.** How the data are split. On Z24 each fold holds out one whole sensor setup for testing and the next one for validation; on QUGS training and validation use campaign A and testing uses all of campaign B.
+**Figure 4.** How the data are split. On Z24 each fold holds out one whole sensor setup for testing and the next one for validation; on QUGS training and validation use campaign A and testing uses all of campaign B.
 
 Two further safeguards support this split. Each window records which measurement it came from, and the code checks automatically, every time the data are loaded, that no measurement appears in both training and testing. Each window is also normalised on its own, which removes its overall amplitude; amplitude mainly identifies the measurement rather than the damage, and removing it improves accuracy on new measurements.
 
@@ -93,7 +101,7 @@ Finally, comparisons are made on the same data splits, so that differences cause
 
 ### 3.1 Effect of the input formulation
 
-If the multi-channel input provides the network with more information, accuracy should rise for every classifier, not only for one design. This is what is observed (Table 3, Figure 3). On Z24, the multi-channel input raises the 1D-CNN's macro-F1 from 0.30 to 0.78 with fifteen classes and from 0.66 to 0.91 with five. On QUGS both inputs already score highly, and the multi-channel input reaches 1.000.
+If the multi-channel input provides the network with more information, accuracy should rise for every classifier, not only for one design. This is what is observed (Table 3, Figure 5). On Z24, the multi-channel input raises the 1D-CNN's macro-F1 from 0.30 to 0.78 with fifteen classes and from 0.66 to 0.91 with five. On QUGS both inputs already score highly, and the multi-channel input reaches 1.000.
 
 **Table 3.** Test macro-F1 with single-channel and multi-channel input. The 1D-CNN uses one fixed setting (learning rate 10⁻³, 32 filters, 4 blocks, kernel size 9); the spectral classifier is logistic regression on the frequency spectrum.[^t3]
 
@@ -106,13 +114,13 @@ If the multi-channel input provides the network with more information, accuracy 
 | QUGS | 5 | 0.967 | 1.000 | 0.999 | 1.000 |
 | QUGS | 15 | 0.883 | 1.000 | 0.997 | 1.000 |
 
-![Figure 3](figures/fig3_formulation.png)
+![Figure 5](figures/fig3_formulation.png)
 
-**Figure 3.** Test macro-F1 with single-channel and multi-channel input, for the 1D-CNN (left) and the spectral classifier (right). Both improve on Z24, which shows that the multi-channel input adds information rather than model capacity.
+**Figure 5.** Test macro-F1 with single-channel and multi-channel input, for the 1D-CNN (left) and the spectral classifier (right). Both improve on Z24, which shows that the multi-channel input adds information rather than model capacity.
 
 The reference classifier confirms that the gain comes from the input. With the same change, logistic regression on the spectrum rises from 0.49 to 0.88 on the 15-class Z24 problem. A simple classifier with fixed features cannot become more powerful, so its gain can only come from new information, namely how the sensors move relative to each other. The gain also appears even though the multi-channel input leaves fewer training samples: on the 5-class Z24 problem, 954 instead of 4,770, because one sample now holds all sensors.
 
-The number of sensors matters even with single-channel input, and it acts in the opposite direction to the number of classes (Table 4, Figure 4). The baseline is five classes and five sensors on Z24. Taking samples from fifteen or thirty-three sensors instead of five raises the 1D-CNN's macro-F1 by 0.14 (p = 0.011) and 0.27 (p = 0.004), because the training data then cover more positions on the structure. Adding classes lowers it, by 0.13 for the 1D-CNN and 0.17 for the WaveNet at fifteen classes, a drop seen in every run although not statistically significant with three runs. More sensors therefore make the task easier, while more classes make it harder.
+The number of sensors matters even with single-channel input, and it acts in the opposite direction to the number of classes (Table 4, Figure 6). The baseline is five classes and five sensors on Z24. Taking samples from fifteen or thirty-three sensors instead of five raises the 1D-CNN's macro-F1 by 0.14 (p = 0.011) and 0.27 (p = 0.004), because the training data then cover more positions on the structure. Adding classes lowers it, by 0.13 for the 1D-CNN and 0.17 for the WaveNet at fifteen classes, a drop seen in every run although not statistically significant with three runs. More sensors therefore make the task easier, while more classes make it harder.
 
 **Table 4.** Change in test macro-F1 of the best setting from a baseline of five classes and five sensors on Z24, single-channel input, mean over three paired splits.
 
@@ -123,9 +131,9 @@ The number of sensors matters even with single-channel input, and it acts in the
 | 15 sensors | **+0.14** | **0.011** | +0.05 | 0.29 |
 | 33 sensors | **+0.27** | **0.004** | +0.25 | 0.08 |
 
-![Figure 4](figures/fig4_classes_sensors.png)
+![Figure 6](figures/fig4_classes_sensors.png)
 
-**Figure 4.** Change in test macro-F1 when the number of classes or of sensors is increased from a baseline of five classes and five sensors (Z24, single-channel input). Dots are individual splits; bars are means. More classes lower the score, more sensors raise it.
+**Figure 6.** Change in test macro-F1 when the number of classes or of sensors is increased from a baseline of five classes and five sensors (Z24, single-channel input). Dots are individual splits; bars are means. More classes lower the score, more sensors raise it.
 
 How much of the extra information a network uses depends on its design. The WaveNet benefits much less from the multi-channel input than the 1D-CNN. On the 15-class Z24 problem its macro-F1 rises only from 0.13 to 0.22. On the 5-class problem it changes little on random splits (0.72 in both cases) and is lower under leave-one-setup-out testing (0.71 against 0.79; Table 8). The information is in the input, but not every design is able to exploit it.
 
@@ -133,7 +141,7 @@ How much of the extra information a network uses depends on its design. The Wave
 
 Once the input is fixed, tuning cannot add information; it can only help the network use what the input already contains. To measure how much it helps, the best setting, chosen on the validation set, is compared with a typical setting, taken as the median of all settings tried, both scored on the test set.
 
-There are eight cases: four scenarios times two network designs (Table 5, Figure 5). In six of them, the best setting is better than the typical one by 0.12 to 0.32 macro-F1, and the difference is statistically significant. For example, on QUGS with fifteen classes the 1D-CNN reaches 0.53 with a typical setting and 0.83 with the best one. The two exceptions are both the 15-class Z24 problem with single-channel input, where no setting performs well (macro-F1 below 0.22), so there is little to gain by choosing between them.
+There are eight cases: four scenarios times two network designs (Table 5, Figure 7). In six of them, the best setting is better than the typical one by 0.12 to 0.32 macro-F1, and the difference is statistically significant. For example, on QUGS with fifteen classes the 1D-CNN reaches 0.53 with a typical setting and 0.83 with the best one. The two exceptions are both the 15-class Z24 problem with single-channel input, where no setting performs well (macro-F1 below 0.22), so there is little to gain by choosing between them.
 
 **Table 5.** Test macro-F1 of the best setting (chosen on validation data) and of the median setting, single-channel input, paired by split.
 
@@ -148,13 +156,13 @@ There are eight cases: four scenarios times two network designs (Table 5, Figure
 | WaveNet | QUGS | 5 | 0.759 | 0.441 | **+0.319** | 0.028 |
 | WaveNet | QUGS | 15 | 0.417 | 0.147 | **+0.270** | 0.011 |
 
-![Figure 5](figures/fig5_tuning.png)
+![Figure 7](figures/fig5_tuning.png)
 
-**Figure 5.** Test macro-F1 of every hyperparameter setting (dots, mean over splits), with the best setting chosen on validation data (orange) and the median setting (grey). The gap between the two lines is the value of tuning.
+**Figure 7.** Test macro-F1 of every hyperparameter setting (dots, mean over splits), with the best setting chosen on validation data (orange) and the median setting (grey). The gap between the two lines is the value of tuning.
 
 Since tuning matters, the next question is whether it must be repeated for every structure. With five classes it need not. Taking the best setting from the other benchmark, instead of tuning on the target benchmark, loses between 0.01 and 0.08 macro-F1, and none of these losses is statistically significant (p between 0.15 and 0.76 for the four combinations of design and target). With fifteen classes the result depends on the source. Settings chosen on the 15-class Z24 problem, where no setting performs well, lose 0.19 on QUGS for the 1D-CNN (p = 0.001). In the other three 15-class combinations the loss is 0.03 to 0.06 and not significant. A setting should therefore be transferred only from a benchmark on which the network performs well.
 
-The ranking of all settings shows the same pattern (Table 6, Figure 6). With five classes, the ranking of settings on Z24 agrees with that on QUGS almost as closely as two random splits of the same benchmark agree with each other. The rank correlation is 0.54 against 0.57–0.62 for the 1D-CNN, and 0.77 against 0.85–0.86 for the WaveNet. Moving to a different structure therefore changes the ranking only slightly more than re-splitting the same data does. The small extra change is clearer for the WaveNet, whose rankings are more repeatable, than for the 1D-CNN, whose split-to-split variation is large enough to hide it. With fifteen classes the comparison is less clean, because the WaveNet's 15-class Z24 ranking is itself poorly repeatable (0.24), as no setting performs well there.
+The ranking of all settings shows the same pattern (Table 6, Figure 8). With five classes, the ranking of settings on Z24 agrees with that on QUGS almost as closely as two random splits of the same benchmark agree with each other. The rank correlation is 0.54 against 0.57–0.62 for the 1D-CNN, and 0.77 against 0.85–0.86 for the WaveNet. Moving to a different structure therefore changes the ranking only slightly more than re-splitting the same data does. The small extra change is clearer for the WaveNet, whose rankings are more repeatable, than for the 1D-CNN, whose split-to-split variation is large enough to hide it. With fifteen classes the comparison is less clean, because the WaveNet's 15-class Z24 ranking is itself poorly repeatable (0.24), as no setting performs well there.
 
 **Table 6.** Agreement between rankings of all settings (Spearman rank correlation of test macro-F1), within one benchmark and between the two benchmarks, mean over pairs of splits.
 
@@ -165,13 +173,13 @@ The ranking of all settings shows the same pattern (Table 6, Figure 6). With fiv
 | WaveNet | 5 | 0.86 | 0.85 | 0.77 |
 | WaveNet | 15 | 0.24 | 0.69 | 0.41 |
 
-![Figure 6](figures/fig6_transfer.png)
+![Figure 8](figures/fig6_transfer.png)
 
-**Figure 6.** Rank agreement of all settings with five classes: between two splits of the same benchmark (blue) and between Z24 and QUGS (orange). Each dot is one pair of splits; bars are means.
+**Figure 8.** Rank agreement of all settings with five classes: between two splits of the same benchmark (blue) and between Z24 and QUGS (orange). Each dot is one pair of splits; bars are means.
 
 ### 3.3 Comparison of search strategies
 
-Because every setting was trained in advance and its score after every epoch was saved, any search algorithm can be replayed exactly on these results without new training. Seven algorithms were compared in this way at the same cost. They are random search; a genetic algorithm with a population of eight over four generations, and the same algorithm without the generation limit; two Bayesian methods, the tree-structured Parzen estimator and Gaussian-process optimisation; successive halving; and hill climbing. Each was replayed one hundred times on each of 45 result tables (Table 7, Figure 7).
+Because every setting was trained in advance and its score after every epoch was saved, any search algorithm can be replayed exactly on these results without new training. Seven algorithms were compared in this way at the same cost. They are random search; a genetic algorithm with a population of eight over four generations, and the same algorithm without the generation limit; two Bayesian methods, the tree-structured Parzen estimator and Gaussian-process optimisation; successive halving; and hill climbing. Each was replayed one hundred times on each of 45 result tables (Table 7, Figure 9).
 
 **Table 7.** Regret (gap in test macro-F1 to the best setting; lower is better) at each budget, in full trainings, mean over 45 result tables and 100 replays. Best value per budget in bold.
 
@@ -183,9 +191,9 @@ Because every setting was trained in advance and its score after every epoch was
 | 20 | 0.022 | 0.021 | 0.012 | **0.003** | 0.005 | 0.028 | 0.012 |
 | 28 | 0.013 | 0.022 | 0.004 | **0.000** | 0.001 | 0.022 | 0.005 |
 
-![Figure 7](figures/fig7_search.png)
+![Figure 9](figures/fig7_search.png)
 
-**Figure 7.** Regret of the seven search algorithms against the budget. Successive halving is best at six trainings, the two Bayesian methods from ten trainings onward, and the genetic algorithm with a fixed number of generations stops improving after about sixteen trainings.
+**Figure 9.** Regret of the seven search algorithms against the budget. Successive halving is best at six trainings, the two Bayesian methods from ten trainings onward, and the genetic algorithm with a fixed number of generations stops improving after about sixteen trainings.
 
 The results depend on the budget, as expected, because an algorithm can only beat random search by learning from the results it has already seen. With a budget of only six full trainings, which is 8% of the 1D-CNN's settings and 17% of the WaveNet's, too few results are available to guide the search, and the Bayesian methods do no better than random search. Only successive halving does better, because it trains many settings for a few epochs instead of a few settings to the end. It finds the true best setting in 25% of runs, against 11–13% for the others.
 

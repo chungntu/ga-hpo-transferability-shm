@@ -82,9 +82,23 @@ Figure~\ref{fig:input} shows the two input formulations compared in this study. 
   \label{fig:input}
 \end{figure}
 
-The first benchmark, Z24, is a full-scale concrete bridge in Switzerland that was damaged step by step before demolition. It contains fifteen damage states, each measured in nine sensor setups at 100\,Hz. The sensors were relocated between setups, except for five reference sensors that remained at the same positions in every setup.
+The first benchmark, Z24, is a full-scale concrete bridge in Switzerland that was damaged step by step before demolition. It contains fifteen damage states, each measured in nine sensor setups at 100\,Hz. The sensors were relocated between setups, except for five reference sensors that remained at the same positions in every setup. Figure~\ref{fig:z24} shows the nine setups along the deck and the reference positions R1--R3.
 
-The second benchmark, QUGS, is a laboratory steel frame that represents a stadium grandstand. It contains 31 states --- the undamaged frame and one loosened bolt at each of its thirty joints --- measured with thirty accelerometers at 1024\,Hz in two separate measurement campaigns.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{z24_sensor_layout.png}
+  \caption{Sensor layout on the Z24 bridge deck, in plan view. Each coloured area is one of the nine sensor setups, with the numbered measurement points along three lines (HH-1 to HH-3). R1--R3 are the reference positions, where sensors stayed in place in every setup. AVT and FVT denote the ambient and forced vibration tests. Source: Z24 benchmark documentation, KU Leuven.}
+  \label{fig:z24}
+\end{figure}
+
+The second benchmark, QUGS, is a laboratory steel frame that represents a stadium grandstand. It contains 31 states --- the undamaged frame and one loosened bolt at each of its thirty joints --- measured with thirty accelerometers at 1024\,Hz in two separate measurement campaigns. Figure~\ref{fig:qugs} shows the frame and the numbering of its joints.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{qugs_frame.png}
+  \caption{The QUGS steel frame with its thirty joints numbered. Each joint carries one accelerometer, and each damage state loosens the bolts at one joint. Source: QUGS benchmark, Qatar University.}
+  \label{fig:qugs}
+\end{figure}
 
 Both benchmarks are used with five and with fifteen classes, giving four scenarios, and all signals are cut into windows of 2048 samples (Table~\ref{tab:data}). In the single-channel input, each sensor's window is a separate sample of shape $(T,1)$. In the multi-channel input, the windows of several sensors at the same time form one sample of shape $(T,C)$. On Z24 the multi-channel input uses only the five fixed sensors, so that each channel always refers to the same position on the bridge. On QUGS, whose sensors never move, it uses five or fifteen sensors.
 

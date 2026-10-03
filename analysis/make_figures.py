@@ -115,7 +115,7 @@ def fig1_input_formulation():
     save(fig, "fig1_input_formulation")
 
 
-# ---------------------------------------------------------------- Figure 2
+# ---------------------------------------------------------------- Figure 4
 def fig2_split():
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6),
                              gridspec_kw={"width_ratios": [1.4, 1], "wspace": 0.25})
@@ -155,7 +155,7 @@ def fig2_split():
     save(fig, "fig2_split")
 
 
-# ---------------------------------------------------------------- Figure 3
+# ---------------------------------------------------------------- Figure 5
 def fig3_formulation_bars():
     rows = {(r["case"], r["multichannel"]): r for r in load("diag_multichannel.json")["rows"]}
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.7), sharey=True)
@@ -178,7 +178,7 @@ def fig3_formulation_bars():
     save(fig, "fig3_formulation")
 
 
-# ---------------------------------------------------------------- Figure 4
+# ---------------------------------------------------------------- Figure 6
 def fig4_factorial():
     cells = ["c05_s05", "c10_s05", "c15_s05", "c05_s15", "c05_s33"]
     labels = {"c10_s05": "10 classes", "c15_s05": "15 classes",
@@ -204,7 +204,7 @@ def fig4_factorial():
     save(fig, "fig4_classes_sensors")
 
 
-# ---------------------------------------------------------------- Figure 5
+# ---------------------------------------------------------------- Figure 7
 def fig5_tuning():
     scen = [("z24_small", "Z24, 5"), ("z24_full", "Z24, 15"),
             ("qugs_small", "QUGS, 5"), ("qugs_full", "QUGS, 15")]
@@ -230,7 +230,7 @@ def fig5_tuning():
     save(fig, "fig5_tuning")
 
 
-# ---------------------------------------------------------------- Figure 6
+# ---------------------------------------------------------------- Figure 8
 def _grids(model, dataset):
     out = {}
     for path in sorted(glob.glob(os.path.join(RES, f"search_grid_{model}_{dataset}_seed*.json"))):
@@ -272,7 +272,7 @@ def fig6_transfer():
     save(fig, "fig6_transfer")
 
 
-# ---------------------------------------------------------------- Figure 7
+# ---------------------------------------------------------------- Figure 9
 def fig7_search():
     h = load("hpo_offline.json")
     budgets = h["budgets"]

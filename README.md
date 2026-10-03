@@ -28,14 +28,15 @@ step whose output already exists, and finishes by running
 
 | paper item | produced by | from |
 |---|---|---|
-| Table 3, Figure 3 | `experiments/diagnostics/diag_multichannel.py` | `results/diag_multichannel.json` |
-| Table 4, Figure 4 | `experiments/factorial.py` | `results/factorial_*.json` |
-| Table 5, Figure 5, transfer loss | `experiments/search.py grid` | `results/search_grid_*.json` |
-| Table 6, Figure 6 | `experiments/search.py grid` | `results/search_grid_*.json` |
-| Table 7, Figure 7 | `analysis/hpo_offline.py` | `results/curves.json`, `results/search_grid_*.json` |
+| Table 3, Figure 5 | `experiments/diagnostics/diag_multichannel.py` | `results/diag_multichannel.json` |
+| Table 4, Figure 6 | `experiments/factorial.py` | `results/factorial_*.json` |
+| Table 5, Figure 7, transfer loss | `experiments/search.py grid` | `results/search_grid_*.json` |
+| Table 6, Figure 8 | `experiments/search.py grid` | `results/search_grid_*.json` |
+| Table 7, Figure 9 | `analysis/hpo_offline.py` | `results/curves.json`, `results/search_grid_*.json` |
 | Table 8 | `experiments/loso_cv.py` | `results/loso_*.json` |
 | Table 9 | `experiments/diagnostics/diag_qugs_channels.py` | `results/qugs_channel_curve.json` |
-| Figures 1–7 | `analysis/make_figures.py` | all of the above |
+| Figures 1, 4–9 | `analysis/make_figures.py` | all of the above |
+| Figures 2–3 | not generated: benchmark documentation (Z24, KU Leuven; QUGS, Qatar University) | `paper/figures/z24_sensor_layout.png`, `paper/figures/qugs_frame.png` |
 | all quoted numbers | `analysis/verify_numbers.py` | all of the above |
 
 Set `PYTHONIOENCODING=utf-8` on Windows (`reproduce.sh` does this): some paths
