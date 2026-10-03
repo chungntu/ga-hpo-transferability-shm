@@ -26,7 +26,7 @@ experiments() {
   # 0. QUGS raw archives -> data/qugs/{A,B}/stateNN.npy (set RAW_DIR inside the script first)
   run data/qugs/B/state31.npy experiments/prepare_qugs.py
 
-  # 1. Full grids, single-channel input (Tables 5-7, Figures 5-7)
+  # 1. Full grids, single-channel input (Tables 5-7, Figures 7-9)
   for s in 0 1 2 3 4; do for d in z24_small qugs_small; do
     run results/search_grid_cnn1d_${d}_seed$s.json experiments/search.py grid --dataset $d --model cnn1d --seed $s; done; done
   for s in 0 1 2; do for d in z24_full qugs_full; do
@@ -45,7 +45,7 @@ experiments() {
   for s in 0 1 2; do for d in z24_small qugs_small; do for k in ga random; do
     run results/search_${k}_wavenet_${d}_seed$s.json experiments/search.py $k --dataset $d --model wavenet --seed $s --fraction half; done; done; done
 
-  # 4. Classes vs sensors (Table 4, Figure 4)
+  # 4. Classes vs sensors (Table 4, Figure 6)
   for s in 0 1 2; do for m in cnn1d wavenet; do
     run results/factorial_${m}_c05_s33_seed$s.json experiments/factorial.py --model $m --seed $s; done; done
 
@@ -59,7 +59,7 @@ experiments() {
   run results/loso_wavenet_z24_small_mc.json experiments/loso_cv.py --model wavenet --classes 5 --sensors 5 --multichannel
   run results/loso_wavenet_z24_full_mc.json  experiments/loso_cv.py --model wavenet --classes 15 --sensors 5 --multichannel
 
-  # 6. Input formulation with a fixed setting (Table 3, Figure 3) and QUGS sensor sweep (Table 9)
+  # 6. Input formulation with a fixed setting (Table 3, Figure 5) and QUGS sensor sweep (Table 9)
   run results/diag_multichannel.json   experiments/diagnostics/diag_multichannel.py
   run results/qugs_channel_curve.json  experiments/diagnostics/diag_qugs_channels.py
   run results/diag_z24full.json        experiments/diagnostics/diag_z24full.py
@@ -70,9 +70,9 @@ experiments() {
 }
 
 tables() {
-  # 8. Offline replay of the seven search algorithms (Table 7, Figure 7)
+  # 8. Offline replay of the seven search algorithms (Table 7, Figure 9)
   run results/hpo_offline.json analysis/hpo_offline.py --repeats 100 --budgets 6 10 14 20 28
-  # 9. Figures 1-7 -> paper/figures/
+  # 9. Figures 1 and 4-9 -> paper/figures/ (Figures 2-3 come from the benchmark documentation)
   run - analysis/make_figures.py
   # 10. Every number quoted in the paper, recomputed -> logs/
   run - analysis/verify_numbers.py

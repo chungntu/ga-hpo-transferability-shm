@@ -48,7 +48,7 @@ def head(t):
 
 
 # ------------------------------------------------------------ Table 3
-head("Table 3 / Fig 3: input formulation (diag_multichannel.json)")
+head("Table 3 / Fig 5: input formulation (diag_multichannel.json)")
 d = load("diag_multichannel.json")
 print("fixed config:", d["config"], "lr", d["lr"], "epochs", d["epochs"])
 for r in d["rows"]:
@@ -56,7 +56,7 @@ for r in d["rows"]:
           f"cnn_f1={r['cnn_f1']:.4f} psd_f1={r['psd_f1']:.4f}")
 
 # ------------------------------------------------------------ Table 4
-head("Table 4 / Fig 4: classes vs sensors, best-by-validation test macro-F1")
+head("Table 4 / Fig 6: classes vs sensors, best-by-validation test macro-F1")
 cells = ["c05_s05", "c10_s05", "c15_s05", "c05_s15", "c05_s33"]
 for model in ("cnn1d", "wavenet"):
     f = {c: np.array([load(f"factorial_{model}_{c}_seed{s}.json")["best_test_macro_f1"]
@@ -67,7 +67,7 @@ for model in ("cnn1d", "wavenet"):
               f"per-seed {np.round(dd, 3).tolist()}")
 
 # ------------------------------------------------------------ Table 5
-head("Table 5 / Fig 5: best (by validation) vs median, test macro-F1, paired by seed")
+head("Table 5 / Fig 7: best (by validation) vs median, test macro-F1, paired by seed")
 for model in ("cnn1d", "wavenet"):
     for ds in ("z24_small", "z24_full", "qugs_small", "qugs_full"):
         g = grids(model, ds)
@@ -100,7 +100,7 @@ for model in ("cnn1d", "wavenet"):
                   f"mean loss {loss.mean():+.3f}  p={p:.3f}")
 
 # ------------------------------------------------------------ Table 6
-head("Table 6 / Fig 6: rank agreement (Spearman, test macro-F1)")
+head("Table 6 / Fig 8: rank agreement (Spearman, test macro-F1)")
 
 
 def rho(a, b):
@@ -142,7 +142,7 @@ for model in ("cnn1d", "wavenet"):
         print(f"{model:<8} {ds:<14} {n1}/{len(mean)} settings at >= 0.999")
 
 # ------------------------------------------------------------ Table 7
-head("Table 7 / Fig 7: offline search replay (hpo_offline.json)")
+head("Table 7 / Fig 9: offline search replay (hpo_offline.json)")
 h = load("hpo_offline.json")
 agg = collections.defaultdict(list)
 for r in h["rows"]:
