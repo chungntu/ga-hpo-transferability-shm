@@ -40,14 +40,21 @@ Thanh Bui Tien \texttt{0000-0002-4001-9246}}
 
 % =====================================================================
 \begin{abstract}
-\noindent
-Deep models for vibration-based damage detection are often improved by tuning their hyperparameters, for example with a genetic algorithm. This paper asks how much that tuning matters compared with a simpler decision: how the sensor signals are presented to the model. Using the Z24 bridge and the QUGS grandstand benchmarks, with training and test data always taken from different measurements, we compare three design decisions: (i) a multi-channel input, in which all sensors recorded at the same time are presented to the model together, against a single-channel input, in which each sensor is presented separately; (ii) tuning the hyperparameters; and (iii) the choice of search algorithm used for tuning. The multi-channel input has by far the largest effect: on the 15-class Z24 problem, macro-F1 rises from 0.30 to 0.78, and a simple spectral classifier improves by a similar amount, which shows that the gain comes from the extra information in the input and not from the model. Choosing the best hyperparameter setting instead of a typical one raises macro-F1 by a further 0.12 to 0.32 in six of eight cases. The search algorithm matters least: when ten or more trainings are allowed, Bayesian optimisation finds settings closer to the best one than random or genetic search does with the same number of trainings. This order follows from what each decision controls: a model cannot learn what is not in its input, tuning only helps the model use the information it already has, and the search algorithm only changes how quickly well-performing settings are found. Finally, the best settings found on one benchmark give the same accuracy on the other benchmark as settings tuned there directly, provided the network performs well on the benchmark used for tuning, so tuning does not need to be repeated for each new structure.
+\noindent\textbf{Purpose} -- Deep models for vibration-based damage detection are often improved by tuning their hyperparameters, for example with a genetic algorithm. This paper asks how much that tuning matters compared with a simpler decision: how the sensor signals are presented to the model.
+
+\noindent\textbf{Design/methodology/approach} -- Using the Z24 bridge and the QUGS grandstand benchmarks, with training and test data taken from different measurements, three design decisions are compared: a multi-channel input against a single-channel input, tuning the hyperparameters, and the choice of search algorithm used for tuning.
+
+\noindent\textbf{Findings} -- The multi-channel input has by far the largest effect: on the 15-class Z24 problem, macro-F1 rises from 0.30 to 0.78, and a spectral classifier improves by a similar amount. Choosing the best hyperparameter setting instead of a typical one raises macro-F1 by a further 0.12 to 0.32 in six of eight cases. The search algorithm matters least: when ten or more trainings are allowed, Bayesian optimisation finds settings closer to the best one than random or genetic search does. The best settings found on one benchmark give the same accuracy on the other, provided the network performs well on the benchmark used for tuning.
+
+\noindent\textbf{Originality} -- The three decisions are compared in the same experiments, on the same data and with the same scoring, which, to our knowledge, has not yet been done; seven search algorithms are compared exactly, at the same number of trainings.
 \end{abstract}
 
 \vspace{0.4em}
 \noindent\textbf{Keywords:} structural health monitoring; vibration-based damage
 detection; deep learning; hyperparameter optimisation; multi-channel input; Z24;
 QUGS
+
+\noindent\textbf{Paper type:} Research paper
 
 \tableofcontents
 
