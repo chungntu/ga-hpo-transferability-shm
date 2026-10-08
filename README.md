@@ -39,6 +39,10 @@ step whose output already exists, and finishes by running
 | Figures 2–3 | not generated: benchmark documentation (Z24, KU Leuven; QUGS, Qatar University) | `paper/figures/z24_sensor_layout.png`, `paper/figures/qugs_frame.png` |
 | all quoted numbers | `analysis/verify_numbers.py` | all of the above |
 
+Numbering follows the LaTeX manuscript in `paper/tex/`. The Word version submitted to
+Engineering Computations follows the journal's style: Tables 1–10 are Tables I–X, the
+QUGS photograph (Figure 3 here) is Plate 1, and Figures 4–9 here are Figures 3–8 there.
+
 Set `PYTHONIOENCODING=utf-8` on Windows (`reproduce.sh` does this): some paths
 contain non-ASCII characters.
 

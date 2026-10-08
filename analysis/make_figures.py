@@ -44,7 +44,9 @@ plt.rcParams.update({
 
 def save(fig, name):
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(OUT, f"{name}.{ext}"), bbox_inches="tight")
+        # no creation date in the PDF, so a re-run reproduces the committed file byte for byte
+        meta = {"CreationDate": None} if ext == "pdf" else None
+        fig.savefig(os.path.join(OUT, f"{name}.{ext}"), bbox_inches="tight", metadata=meta)
     plt.close(fig)
     print("wrote", name)
 
